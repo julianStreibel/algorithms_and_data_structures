@@ -4,3 +4,4 @@
 
 - Linked List
 - Binary Tree
+- Graph
