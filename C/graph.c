@@ -11,5 +11,5 @@ int main()
     graph_add_edge(g, 3, 4, 1, 0);
     graph_add_edge(g, 5, 2, 9, 0);
 
-    graph_print_adjacency_list(g);
+    graph_print_adjacency_lists(g);
 }

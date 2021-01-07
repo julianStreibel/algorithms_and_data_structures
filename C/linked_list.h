@@ -11,20 +11,18 @@ typedef struct linked_list
 struct linked_list_node
 {
     int key;
-    double data;
+    void *data;
     linked_list_node *next;
-    linked_list *llist;
 };
 
-linked_list *
-linked_list_create()
+linked_list *linked_list_create()
 {
     linked_list *new_linked_list = (linked_list *)malloc(sizeof(linked_list));
     new_linked_list->head = NULL;
     return new_linked_list;
 }
 
-void linked_list_insert(linked_list *linked_list_to_insert, int new_key, double new_data, int position)
+void linked_list_insert(linked_list *linked_list_to_insert, int new_key, void *new_data, int position)
 {
     linked_list_node *new_node = (linked_list_node *)malloc(sizeof(linked_list_node));
     new_node->key = new_key;
@@ -56,38 +54,18 @@ void linked_list_insert(linked_list *linked_list_to_insert, int new_key, double 
     return;
 }
 
-linked_list *linked_list_get_llist_with_key(linked_list *linked_list_to_get_from, int key)
+void *linked_list_get_data_with_key(linked_list *linked_list_to_get_from, int key)
 {
     linked_list_node *current = linked_list_to_get_from->head;
-    while (current && current->key != key)
+    while (current)
     {
-        current = current->next;
         if (current && current->key == key)
         {
-            return current->llist;
+            return current->data;
         }
+        current = current->next;
     }
     return NULL;
-}
-
-void linked_list_insert_in_llist_with_key(linked_list *linked_list_to_insert_in_llist, int key_of_node_with_llist, int new_key, double new_data)
-{
-    if (linked_list_to_insert_in_llist)
-    {
-        linked_list_node *current = linked_list_to_insert_in_llist->head;
-        while (current->key != key_of_node_with_llist && current->next)
-        {
-            current = current->next;
-        }
-        if (current->key == key_of_node_with_llist)
-        {
-            if (!current->llist)
-            {
-                current->llist = linked_list_create();
-            }
-            linked_list_insert(current->llist, new_key, new_data, 0);
-        }
-    }
 }
 
 int linked_list_contains(linked_list *linked_list_to_check, int key)
@@ -108,19 +86,6 @@ int linked_list_contains(linked_list *linked_list_to_check, int key)
     return 0;
 }
 
-int linked_list_llist_from_contains(linked_list *linked_list_to_check, int key_from, int key)
-{
-    linked_list *containing_linked_list = linked_list_get_llist_with_key(linked_list_to_check, key_from);
-    if (containing_linked_list)
-    {
-        return linked_list_contains(containing_linked_list, key);
-    }
-    else
-    {
-        return 0;
-    }
-}
-
 void linked_list_remove_item_at_position(linked_list *linked_list_to_remove_item, int position)
 {
     if (!linked_list_to_remove_item->head)
@@ -133,8 +98,8 @@ void linked_list_remove_item_at_position(linked_list *linked_list_to_remove_item
     if (position == 0)
     {
         linked_list_node *new_next = current->next;
+        free(current->data);
         free(current);
-        free(current->llist);
         linked_list_to_remove_item->head = new_next;
         return;
     }
@@ -148,12 +113,12 @@ void linked_list_remove_item_at_position(linked_list *linked_list_to_remove_item
     if (current->next && current->next->next)
     {
         linked_list_node *new_next = current->next->next;
-        free(current->next->llist);
+        free(current->next->data);
         free(current->next);
         current->next = new_next;
         return;
     }
-    free(current->next->llist);
+    free(current->next->data);
     free(current->next);
     current->next = NULL;
     return;
@@ -167,7 +132,7 @@ void linked_list_delete(linked_list *linked_list_to_delete)
     while (current)
     {
         node_to_delete = current;
-        free(node_to_delete->llist);
+        free(node_to_delete->data);
         current = current->next;
         free(node_to_delete);
     }
@@ -179,6 +144,7 @@ void linked_list_map(linked_list *linked_list_to_map, void (*func)(linked_list_n
     {
         return;
     }
+
     linked_list_node *current = linked_list_to_map->head;
     while (current->next)
     {
@@ -189,20 +155,9 @@ void linked_list_map(linked_list *linked_list_to_map, void (*func)(linked_list_n
     return;
 }
 
-void linked_list_llist_print_key(linked_list_node *node)
-{
-    printf("%d ", node->key);
-}
-
 void linked_list_print_key(linked_list_node *node)
 {
-    printf("%d ", node->key);
-    if (node->llist)
-    {
-        printf(":");
-        linked_list_map(node->llist, *linked_list_llist_print_key);
-    }
-    printf("\n");
+    printf("%d, ", node->key);
 }
 
 void linked_list_print(linked_list *linked_list_to_print)
