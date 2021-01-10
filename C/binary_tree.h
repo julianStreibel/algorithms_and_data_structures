@@ -1,9 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct tree_node tree_node;
-
-struct tree_node
+typedef struct tree_node
 {
     float data;
     tree_node *left;

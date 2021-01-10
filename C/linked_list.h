@@ -59,7 +59,7 @@ void *linked_list_get_data_with_key(linked_list *linked_list_to_get_from, int ke
     linked_list_node *current = linked_list_to_get_from->head;
     while (current)
     {
-        if (current && current->key == key)
+        if (current->key == key)
         {
             return current->data;
         }
@@ -84,6 +84,40 @@ int linked_list_contains(linked_list *linked_list_to_check, int key)
         current = current->next;
     }
     return 0;
+}
+
+linked_list_node *linked_list_pop_at_position(linked_list *linked_list_to_pop_item, int position)
+{
+    if (!linked_list_to_pop_item->head)
+    {
+        return NULL;
+    }
+
+    linked_list_node *current = linked_list_to_pop_item->head;
+
+    if (position == 0)
+    {
+        linked_list_node *new_next = current->next;
+        linked_list_to_pop_item->head = new_next;
+        return current;
+    }
+
+    int i = 0;
+    while (current->next->next && (position != i + 1 || position == -1))
+    {
+        current = current->next;
+        i++;
+    }
+    if (current->next->next)
+    {
+        linked_list_node *new_next = current->next->next;
+        linked_list_node *item_to_pop = current->next;
+        current->next = new_next;
+        return item_to_pop;
+    }
+    linked_list_node *item_to_pop = current->next;
+    current->next = NULL;
+    return item_to_pop;
 }
 
 void linked_list_remove_item_at_position(linked_list *linked_list_to_remove_item, int position)
@@ -124,11 +158,12 @@ void linked_list_remove_item_at_position(linked_list *linked_list_to_remove_item
     return;
 }
 
-void linked_list_delete(linked_list *linked_list_to_delete)
+void linked_list_delete(linked_list *linked_list_to_delete, int without_itselft)
 {
     linked_list_node *current = linked_list_to_delete->head;
     linked_list_node *node_to_delete;
-    free(linked_list_to_delete);
+    if (!without_itselft)
+        free(linked_list_to_delete);
     while (current)
     {
         node_to_delete = current;
@@ -165,5 +200,6 @@ void linked_list_print(linked_list *linked_list_to_print)
     if (linked_list_to_print)
     {
         linked_list_map(linked_list_to_print, *linked_list_print_key);
+        printf("\n");
     }
 }
