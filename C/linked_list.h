@@ -158,11 +158,11 @@ void linked_list_remove_item_at_position(linked_list *linked_list_to_remove_item
     return;
 }
 
-void linked_list_delete(linked_list *linked_list_to_delete, int without_itselft)
+void linked_list_delete(linked_list *linked_list_to_delete, int delete_itselft)
 {
     linked_list_node *current = linked_list_to_delete->head;
     linked_list_node *node_to_delete;
-    if (!without_itselft)
+    if (delete_itselft)
         free(linked_list_to_delete);
     while (current)
     {

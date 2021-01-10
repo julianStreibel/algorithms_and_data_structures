@@ -129,16 +129,3 @@ void graph_print_dijkstra_results(linked_list *determined_vertices)
         current = current->next;
     }
 }
-
-void graph_delete(graph *graph_to_delete)
-{
-    linked_list_node *current = graph_to_delete->vertices->head;
-    while (current)
-    {
-        linked_list *current_list = current->data;
-        linked_list_delete(current_list, 1);
-        current = current->next;
-    }
-    linked_list_delete(graph_to_delete->vertices, 0);
-    free(graph_to_delete);
-}
