@@ -23,11 +23,11 @@ int main()
         current_weight = current_weight->next;
     }
 
-    graph_print_adjacency_lists(g);
-
     linked_list *determined_vertices = graph_dijkstra(g, 1);
 
     graph_print_dijkstra_results(determined_vertices);
+
+    graph_print_adjacency_lists(g);
 
     return 0;
 }
