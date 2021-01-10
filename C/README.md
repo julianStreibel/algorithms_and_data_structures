@@ -12,7 +12,7 @@
 
         Cormen, Thomas H., et al. "Introduction to Algorithms (3-rd edition)." MIT Press and McGraw-Hill (2009).
 
-Running the following command loads the edges from ../Data/Graph/dh_stanford_edges.csv, builds a graph and runs dijksta.
+Running the following command loads the edges from [dh_stanford_edges.csv](Data/Graph/dh_stanford_edges.csv), builds a graph and runs dijksta.
 
 ```
 gcc graph.c && ./a.out
