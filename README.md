@@ -4,11 +4,16 @@
 
 Cormen Leiserson Rivest Stein CLRS - Introduction to Algorithms - 3rd Edition
 
-- [Linked List](linked_list.h)
-- [Binary Tree](binary_tree.h)
-- [Heap](heap.h)
-- [Graph](graph.h)
+- [Linked List](C/linked_list.h)
+- [Binary Tree](C/binary_tree.h)
+- [Heap](C/heap.h)
+- [Graph](C/graph.h)
   - Dijkstra: Dijkstra's algorithm is an algorithm for finding the shortest paths between nodes in a graph which may represent, for example, road networks. It was conceived by computer scientist Edsger W. Dijkstra in 1956 and published three years later.
+    ![dijkstra](statics/dijkstra.png)
+    ![dijkstra](statics/init_single_source.png)
+    ![dijkstra](statics/relax.png)
+
+    Cormen, Thomas H., et al. "Introduction to Algorithms (3-rd edition)." MIT Press and McGraw-Hill (2009).
 
 Running the following command loads the edges from ../Data/Graph/dh_stanford_edges.csv, builds a graph and runs dijksta.
 
