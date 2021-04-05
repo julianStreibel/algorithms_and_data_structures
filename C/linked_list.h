@@ -158,6 +158,27 @@ void linked_list_remove_item_at_position(linked_list *linked_list_to_remove_item
     return;
 }
 
+void linked_list_reverse(linked_list *linked_list_to_reverse)
+{
+    linked_list_node *current = linked_list_to_reverse->head;
+    linked_list_node *helper;
+    if (!current || !current->next)
+    {
+        return;
+    }
+    helper = current->next;
+    current->next = NULL;
+    current = helper;
+    while (current)
+    {
+        linked_list_node *second = linked_list_to_reverse->head;
+        linked_list_to_reverse->head = current;
+        helper = current->next;
+        current->next = second;
+        current = helper;
+    }
+}
+
 void linked_list_delete(linked_list *linked_list_to_delete, int delete_itselft)
 {
     linked_list_node *current = linked_list_to_delete->head;
